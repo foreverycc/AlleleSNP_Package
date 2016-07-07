@@ -1,0 +1,9 @@
+Package: AlleleSNP
+Type: Package
+Title: Identify allele-specific effects of SNPs through sequencing data
+Version: 0.1.0
+Author: Chenchen Yang
+Maintainer: Chenchen Yang <yang529@usc.edu>
+Description: Identify allele-specific effects of SNPs through investigating sequencing data from both online ENCODE database and local files.
+License: GPL-3
+LazyData: TRUE
