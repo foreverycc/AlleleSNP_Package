@@ -185,7 +185,7 @@ process_vcf_data = function(vcf_data, vcf_software = "GATK") {
         # add ref and alt allele counts information
         vcf_data_gr = rowRanges(vcf_data)
         names(vcf_data_gr) = 1:length(vcf_data_gr)
-        # vcf_data_df = as.data.frame(vcf_data_gr)
+        # vcf_data_df = as.data.frame(vcf_data_gr) # Here "as.data.frame" sometimes doesn't work!
         vcf_data_df = data.frame(seqnames = vcf_data_gr@seqnames, vcf_data_gr@ranges, vcf_data_gr@elementMetadata)
         vcf_data_df = mutate(vcf_data_df, ref_count = ref_count_vec, alt_count = alt_count_vec)
 

@@ -16,19 +16,20 @@
 
 # 2. generate snp-cnv table
 # Aim: to generate snp-cnv table: rows - snps; cols - encode samples;
-gen_snp_cnv_table = function(snp_info_df, snp_info_gr, cnv_grList_file='./data/cnv_files/ENCODE_CNV_GR_List.rds') {
+gen_snp_cnv_table = function(snp_info_df, snp_info_gr) {
 
         cat("Add ENCODE cnv information...\n")
-        cnv_gr_list = readRDS(cnv_grList_file)
-        snp_cnv_table = data.frame(matrix(nrow = length(snp_info_gr), ncol = length(cnv_gr_list)))
-        colnames(snp_cnv_table) = names(cnv_gr_list)
+        # encode_cnv_gr_list = readRDS(cnv_grList_file)
+        data("encode_cnv_gr_list")
+        snp_cnv_table = data.frame(matrix(nrow = length(snp_info_gr), ncol = length(encode_cnv_gr_list)))
+        colnames(snp_cnv_table) = names(encode_cnv_gr_list)
 
-        for (i in 1:length(cnv_gr_list)) {
+        for (i in 1:length(encode_cnv_gr_list)) {
                 # ----- test ------ #
                 # print (i)
                 # ----------------- #
-                overlaps_df_i = as.data.frame(findOverlaps(snp_info_gr, cnv_gr_list[[i]]))
-                cnv_snp_info_i = cnv_gr_list[[i]][overlaps_df_i$subjectHits]$name
+                overlaps_df_i = as.data.frame(findOverlaps(snp_info_gr, encode_cnv_gr_list[[i]]))
+                cnv_snp_info_i = encode_cnv_gr_list[[i]][overlaps_df_i$subjectHits]$name
                 snp_cnv_table[overlaps_df_i$queryHits, i] = cnv_snp_info_i
         }
 
@@ -41,8 +42,7 @@ gen_snp_cnv_table = function(snp_info_df, snp_info_gr, cnv_grList_file='./data/c
 
 # main function ---------------------------------------------------------------------------------------------------
 
-get_encodeCnv_info_main = function(snp_info_file, output_dir = "./", sample_name = "", output_file = NA,
-                                    cnv_grList_file='./data/cnv_files/ENCODE_CNV_GR_List.rds') {
+get_encodeCnv_info_main = function(snp_info_file, output_dir = "./", sample_name = "", output_file = NA) {
 
 # Test #
 # snp_info_file = "./data/haploreg_files/LUC_Index+LD_SNPs_20160607.csv"
@@ -54,8 +54,7 @@ get_encodeCnv_info_main = function(snp_info_file, output_dir = "./", sample_name
 
         # 2. generate snp-cnv table (row: snps, col: all encode cnv samples)
         snp_info_addCnv_df = gen_snp_cnv_table(snp_info_df = snp_info_list$snp_info_df,
-                                               snp_info_gr = snp_info_list$snp_info_gr,
-                                               cnv_grList_file = cnv_grList_file)
+                                               snp_info_gr = snp_info_list$snp_info_gr)
         # head(snp_cnv_df)
 
         # 3. write down snp-cnv table
