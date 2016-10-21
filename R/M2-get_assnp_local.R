@@ -1,4 +1,4 @@
-# M1-get_assnp_local
+# M2-get_assnp_local
 ## ==================================================================================
 ## Function: get_assnp_local
 ###  Aim: To get allele-specific SNP using local file

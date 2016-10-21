@@ -106,7 +106,7 @@ get_haploreg_info = function(input_snps, population, r2_cutoff) {
         python_code = paste0("import urllib, urllib2; ",
                              "data = urllib.urlencode({'query':'", paste(input_snps, collapse = ","),"', ",
                              "'ldThresh':'", r2_cutoff, "', ", "'ldPop':'", population, "', 'output':'text'}); ",
-                             "info = urllib2.urlopen('http://www.broadinstitute.org/mammals/haploreg/haploreg_v3.php', data); ",
+                             "info = urllib2.urlopen('http://archive.broadinstitute.org/mammals/haploreg/haploreg_v3.php', data); ",
                              "content = info.read(); ",
                              "open('assnp.tmp.txt', 'w').write(content)")
 

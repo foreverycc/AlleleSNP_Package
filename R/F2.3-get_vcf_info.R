@@ -1,4 +1,4 @@
-# 02-get genotype by querying vcf files
+# F2.3-get genotype by querying vcf files
 ## ==================================================================================
 ## Function: get_vcf_info_main
 ###  Aim: To get the genotypes of input SNPs by vcf files
