@@ -3,7 +3,7 @@ for (file in list.files("./R/", full.names = T)) {
 }
 
 assnp_dir = .libPaths()
-index_snp = paste0(assnp_dir, "/AlleleSNP/data/input_snps/LUC_Index_SNPs_20160607_short.csv")
+index_snp = paste0(assnp_dir, "/AlleleSNP/data/input_snps/")
 read.csv(index_snp)
 
 # get_assnp_singleBam(index_snp_file = "../00-AlleleSNP/data/input_snps/LUC_Index_SNPs_20160607_short.csv",
