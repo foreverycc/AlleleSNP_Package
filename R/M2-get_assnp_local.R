@@ -46,7 +46,7 @@ get_assnp_sample = function(index_snp_file,
         bam_dir = paste0(sample_dir, "/bam_files/")
         peak_dir = paste0(sample_dir, "/peak_files/")
         vcf_dir = paste0(sample_dir, "/vcf_files/")
-        vcf_file_for_cnv = list.files(vcf_dir, "formatcor.vcf$", full.names = T)
+        vcf_file_for_cnv = list.files(vcf_dir, "[Ww][Gg][Ss].*vcf$", full.names = T)
 
         get_assnp(index_snp_file = index_snp_file,
                   snp_info_file = snp_info_file,
