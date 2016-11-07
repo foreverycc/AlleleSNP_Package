@@ -49,7 +49,7 @@ gen_output_file_vcfInfo = function(snp_info_file, output_dir = "./", sample_name
 
 # 1. read snp file ------------------------------------------------------------------------------------------------
 
-# source ("./src/scripts/F2.1-get_alleleDist_info.R")
+# source ("./R/F2.1-get_alleleDist_info.R")
 # same as read_inputSNP_file
 
 # Test #
@@ -280,8 +280,8 @@ get_vcf_info_main = function(snp_info_file, vcf_dir = NA, vcf_file = NA, output_
 }
 
 # Test #
-# snp_file_loc = "LUC_Index_SNPs_20160607_riskPop_0.5.csv"
-# get_vcf_info_main(snp_info_file = snp_file_loc, vcf_dir = "./data/samples/DDBJ_A549/vcf_files/")
+# snp_file_loc = "./LUC_Index_SNPs_20160607_short_A549_bySample_assnp/LUC_Index_SNPs_20160607_short_riskPop_0.5.csv"
+# get_vcf_info_main(snp_info_file = snp_file_loc, vcf_dir = "./data/samples/DDBJ_A549_SelRegion/vcf_files/")
 
 
 
