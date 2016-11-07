@@ -292,8 +292,8 @@ get_vcf_info_main = function(snp_info_file, vcf_dir = NA, vcf_file = NA, output_
 }
 
 # Test #
-snp_file_loc = "./input_snp_example2_A549_assnp/input_snp_example2_riskPop_0.5.csv"
-get_vcf_info_main(snp_info_file = snp_file_loc, vcf_dir = "./inst/extdata/sample/A549/vcf_files/")
+# snp_file_loc = "./input_snp_example2_A549_assnp/input_snp_example2_riskPop_0.5.csv"
+# get_vcf_info_main(snp_info_file = snp_file_loc, vcf_dir = "./inst/extdata/sample/A549/vcf_files/")
 
 
 
