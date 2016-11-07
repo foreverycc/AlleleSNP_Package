@@ -1,10 +1,17 @@
-for (file in list.files("./R/", full.names = T)) {
-        source(file)
-}
+# library(devtools)
+#
+# install_github("foreverycc/AlleleSNP_Package")
+# for (file in list.files("./R/", pattern = ".*R", full.names = T)) {
+#         print (file)
+#         source(file)
+# }
 
+library(AlleleSNP)
 assnp_dir = .libPaths()
-index_snp = paste0(assnp_dir, "/AlleleSNP/data/input_snps/LUC_Index_SNPs_20160607_short.csv")
-read.csv(index_snp)
+index_snp_file = paste0(assnp_dir, "/AlleleSNP/extdata/input_snps/input_snp_example2.csv")
+read.csv(index_snp_file, header = F)
+
+sample_dir = paste0(assnp_dir, "/AlleleSNP/extdata/sample/A549")
 
 # get_assnp_singleBam(index_snp_file = "../00-AlleleSNP/data/input_snps/LUC_Index_SNPs_20160607_short.csv",
                     # bam_dir = "../00-AlleleSNP/data/samples/DDBJ_A549/bam_files/", sample_name = "A549_singleBam")
@@ -12,8 +19,8 @@ read.csv(index_snp)
 # get_assnp_sample(index_snp_file = "../00-AlleleSNP/data/input_snps/LUC_Index_SNPs_20160607_short.csv",
 #                  sample_name = "A549_bySample", sample_dir = "../00-AlleleSNP/data/samples/DDBJ_A549/")
 
-# get_assnp_sample(index_snp_file = "../00-AlleleSNP/data/input_snps/LUC_Index_SNPs_20160607_short.csv",
-#                  sample_name = "A549_bySample", sample_dir = "./data/samples/DDBJ_A549_SelRegion/")
+get_assnp_sample(index_snp_file = index_snp_file,
+                 sample_name = "A549", sample_dir = sample_dir)
 
 # get_assnp_encodeDGF(index_snp_file = "../00-AlleleSNP/data/input_snps/LUC_Index_SNPs_20160607_short.csv",
                     # cell_sel = "A549")

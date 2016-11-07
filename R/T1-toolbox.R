@@ -8,7 +8,7 @@ write.csv0 = function(...) {
 # toolbox: get # of lines of code
 get_code_lines_counts = function() {
         line_count = 0
-        for (file in list.files("./src/scripts/", ".R", full.names = T)) {
+        for (file in list.files("./R/", ".R", full.names = T)) {
                 print (file)
                 bash_output = system(paste('wc -l', file), intern = T)
                 bash_output_vec = strsplit(bash_output, split = " ")[[1]]

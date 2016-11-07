@@ -21,7 +21,7 @@
 # 0. load packages ------------------------------------------------------------------------------------------------
 
 load_packages_2.3 = function(){
-        packages = c('dplyr', 'VariantAnnotation','GenomicRanges')
+        packages = c('dplyr', 'VariantAnnotation','GenomicRanges', 'Biostrings')
         load = lapply(packages, require, character.only = T)
 }
 
@@ -167,6 +167,9 @@ process_vcf_data = function(vcf_data, vcf_software = "GATK") {
 # Input: vcf_data, (vcf annotation format)
 # Output: vcf data frame, with genotype, counts of ref and alt alleles added
 # helper function: extract_allelic_dist
+        ### Test ###
+        # vcf_data = vcf_data_i_het
+        # vcf_software = vcf_software_i
 
         # calculate ref and alt allele counts
         vcf_allelic_dist = extract_allelic_dist(vcf_data, vcf_software)
@@ -179,10 +182,10 @@ process_vcf_data = function(vcf_data, vcf_software = "GATK") {
         })
 
         # add ref and alt allele counts information
-        vcf_data_gr = rowRanges(vcf_data)
+        vcf_data_gr = GenomicRanges::rowRanges(vcf_data)
         names(vcf_data_gr) = 1:length(vcf_data_gr)
         vcf_data_df = as.data.frame(vcf_data_gr)
-        vcf_data_df = mutate(vcf_data_df, ref_count = ref_count_vec, alt_count = alt_count_vec)
+        vcf_data_df = dplyr::mutate(vcf_data_df, ref_count = ref_count_vec, alt_count = alt_count_vec)
 
         # modify the data format (from DNAString to character)
         vcf_data_df$ALT = sapply(vcf_data_df$ALT, function(x) as.character(unlist(x)))
@@ -245,6 +248,15 @@ add_vcf_info = function(snp_info_df, vcf_df_list) {
 # main function ---------------------------------------------------------------------------------------------------
 
 get_vcf_info_main = function(snp_info_file, vcf_dir = NA, vcf_file = NA, output_dir = "./", sample_name = "", output_file = NA) {
+        ### Test ###
+        # snp_info_file = snp_file_loc
+        # vcf_dir = "./inst/extdata/sample/A549/vcf_files/"
+        # vcf_file = NA
+        # output_dir = "./"
+        # sample_name = ""
+        # output_file = NA
+
+
         # 0. load packages
         load_packages_2.3()
         cat("get vcf information for SNPs ... \n")
@@ -280,8 +292,8 @@ get_vcf_info_main = function(snp_info_file, vcf_dir = NA, vcf_file = NA, output_
 }
 
 # Test #
-# snp_file_loc = "./LUC_Index_SNPs_20160607_short_A549_bySample_assnp/LUC_Index_SNPs_20160607_short_riskPop_0.5.csv"
-# get_vcf_info_main(snp_info_file = snp_file_loc, vcf_dir = "./data/samples/DDBJ_A549_SelRegion/vcf_files/")
+snp_file_loc = "./input_snp_example2_A549_assnp/input_snp_example2_riskPop_0.5.csv"
+get_vcf_info_main(snp_info_file = snp_file_loc, vcf_dir = "./inst/extdata/sample/A549/vcf_files/")
 
 
 
