@@ -184,12 +184,13 @@ process_vcf_data = function(vcf_data, vcf_software = "GATK") {
         # add ref and alt allele counts information
         vcf_data_gr = GenomicRanges::rowRanges(vcf_data)
         names(vcf_data_gr) = 1:length(vcf_data_gr)
+        # vcf_data_df = as.data.frame(vcf_data_gr) # This might not work in R package. Don't know why
         vcf_data_df = data.frame(seqnames = vcf_data_gr@seqnames, vcf_data_gr@ranges, vcf_data_gr@elementMetadata)
         vcf_data_df = dplyr::mutate(vcf_data_df, ref_count = ref_count_vec, alt_count = alt_count_vec)
 
         # modify the data format (from DNAString to character)
-        # vcf_data_df$ALT = sapply(vcf_data_df$ALT, function(x) as.character(unlist(x))) # This might not work in package
-        vcf_data_df$ALT = sapply(vcf_data_df$ALT, function(x) toString(x))
+        vcf_data_df$ALT = sapply(vcf_data_df$ALT, function(x) as.character(unlist(x)))
+        # vcf_data_df$ALT = sapply(vcf_data_df$ALT, function(x) toString(x))
 
         return(vcf_data_df)
 }
