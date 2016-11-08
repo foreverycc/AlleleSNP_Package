@@ -188,7 +188,8 @@ process_vcf_data = function(vcf_data, vcf_software = "GATK") {
         vcf_data_df = dplyr::mutate(vcf_data_df, ref_count = ref_count_vec, alt_count = alt_count_vec)
 
         # modify the data format (from DNAString to character)
-        vcf_data_df$ALT = sapply(vcf_data_df$ALT, function(x) as.character(unlist(x)))
+        # vcf_data_df$ALT = sapply(vcf_data_df$ALT, function(x) as.character(unlist(x))) # This might not work in package
+        vcf_data_df$ALT = sapply(vcf_data_df$ALT, function(x) toString(x))
 
         return(vcf_data_df)
 }
