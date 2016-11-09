@@ -11,10 +11,10 @@
 # source("./src/scripts/M1-get_assnp.R")
 
 
-# wrapper function: get_assnp_singleBam ---------------------------------------------------------------------------
+# wrapper function: get_assnp_byBam ---------------------------------------------------------------------------
 
 # get ase snp just by .bam files, not using .vcf files; no information of peak, and cnv added
-get_assnp_singleBam = function(index_snp_file,
+get_assnp_byBam = function(index_snp_file,
                                snp_info_file = NA,
                                sample_name = "",
                                bam_dir,
@@ -37,7 +37,7 @@ get_assnp_singleBam = function(index_snp_file,
 # wrapper function: get_assnp_sample ------------------------------------------------------------------------------
 # get ase snp just by .bam files and .vcf files; with information of peak, and cnv added; ase are corrected by cnv
 
-get_assnp_sample = function(index_snp_file,
+get_assnp_bySample = function(index_snp_file,
                             snp_info_file = NA,
                             sample_name = "",
                             sample_dir = "./data/samples/DDBJ_A549/",
