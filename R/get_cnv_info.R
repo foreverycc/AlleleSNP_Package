@@ -10,13 +10,10 @@
 
 # # 1. read snp file into data frame
 # # snp_list should contain both the df and GRange object
-# snp_list = read_snpFile()
 #
 # # 2. read vcf file
-# vcf_info_list = read_vcfFile(vcf_file_for_cnv, snp_info_gr)
 #
 # # 3. add overlapping info to original snp table
-# snp_df_proc = add_genotype_info(snp_info_df, vcf_list)
 
 # 0-1. load packages ----------------------------------------------------------------------------------------------
 
@@ -25,8 +22,6 @@ load_packages_2.4 = function(){
         load = lapply(packages, require, character.only = T)
 }
 
-# function: write.csv0
-# source("./src/scripts/T1-toolbox.R")
 
 # 1. some helper functions ----------------------------------------------------------------------------------------
 # generate output file name
@@ -74,18 +69,10 @@ merge_het_snp_summary_df = function (het_snp_summary_list) {
 }
 
 
-# 2. get loci cnv  ------------------------------------------------------------------------------------------------
-
-# to source the function: get_loci_cnv_byEthic
-# source("./src/scripts/F2.4.1-get_loci_cnv_byEthic.R")
-
-# 3. add cnv information on risk SNPs --------------------------------------------------------------------------------
+# 2. add cnv information on risk SNPs --------------------------------------------------------------------------------
 
 add_cnv_info_riskSnp = function(snp_info_addVcf_df, het_snp_summary_df) {
 # Aim: to add cnv information to risk snp table
-
-        # Test #
-        # snp_info_addVcf_df = ldsnp_info_vcf_list$snp_info_addVcf_df
 
         # modify data: make r2, D., population into single string
         r2 = as.numeric(sapply(as.character(snp_info_addVcf_df$r2), function(x) strsplit(x, ",")[[1]][1]))
@@ -127,18 +114,6 @@ add_cnv_info_riskSnp = function(snp_info_addVcf_df, het_snp_summary_df) {
 get_cnv_info_main = function(index_snp_file , snp_info_file = NA, sample_name, sample_ethic = "EUR",
                              output_dir = "./", output_file = NA, vcf_file_for_cnv, r2_cutoff = 0.5,
                              distance_threshold = 100, min_ldsnp_num = 1, read_count_cutoff = 1) {
-        # Test #
-        # index_snp_file = "./data/input_snps/LUC_Index_SNPs_20160607.csv"
-        # snp_info_file = NA
-        # sample_name = "DDBJ_PC14"
-        # sample_ethic = "EUR"
-        # output_dir = "./"
-        # output_file = NA
-        # vcf_file_for_cnv = "/Volumes/Macintosh_HD_2/Research/00-PROJECTS/00-Allele_Specific_SNP_Finding/data/Samples/DDBJ_PC-14/vcf_files/PC-14_snv.GATK.formatcor.vcf"
-        # r2_cutoff = 0.5
-        # distance_threshold = 50
-        # min_ldsnp_num = 1
-        # read_count_cutoff = 1
 
         # 0. preparation
         load_packages_2.4()
@@ -198,9 +173,3 @@ get_cnv_info_main = function(index_snp_file , snp_info_file = NA, sample_name, s
         return(list(snp_info_addCnv_df = snp_info_addCnv_df, output_file = output_file))
 
 }
-
-
-# Test #
-# get_cnv_info_main(output_dir = output_dir)
-
-

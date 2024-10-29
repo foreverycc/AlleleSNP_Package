@@ -7,11 +7,6 @@
 ## ==================================================================================
 
 
-# 0. toolbox ------------------------------------------------------------------------------------------------------
-
-# function: write.csv0
-# source("./src/scripts/T1-toolbox.R")
-
 # output_file ----------------------------------------------------------------------------------------------------
 
 gen_output_file_ase = function(snp_info_file, output_dir = "./") {
@@ -158,6 +153,7 @@ add_cnv_res = function(snp_info_alleleDist_df, snp_info_cnv_file) {
         rownames(snp_info_cnv_df) = as.character(snp_info_cnv_df$rsID)
         head(snp_info_cnv_df)
         snp_info_cnv_df_sel = snp_info_cnv_df[, c("ref_count", "alt_count", "ref_cnv", "alt_cnv")]
+        names(snp_info_cnv_df_sel) = c("ref_wgs", "alt_wgs", "ref_cnv", "alt_cnv")
         head(snp_info_cnv_df_sel)
 
         # add cnv results
@@ -172,11 +168,8 @@ add_cnv_res = function(snp_info_alleleDist_df, snp_info_cnv_file) {
 add_cnv_res_encode = function(snp_info_alleleDist_df, snp_info_cnv_file) {
 # Aim: to add encode-cnv information
 
-        # Test #
-        # snp_info_cnv_file = "LUC_Index+LD_SNPs_20160607_ENCODE_cnvInfo.csv"
-
         if (is.na(snp_info_cnv_file)) {
-                snp_info_alleleDist_df$alt_count = snp_info_alleleDist_df$ref_count = NA
+                snp_info_alleleDist_df$alt_wgs = snp_info_alleleDist_df$ref_wgs = NA
                 snp_info_alleleDist_df$alt_cnv = snp_info_alleleDist_df$ref_cnv = 1
                 return (snp_info_alleleDist_df)
         }
@@ -279,12 +272,6 @@ binomial_test = function(x, y, p=0.5) {
 
 # Function: vectorized chi-square test
 ASE_test_cnvCor = function(x1, x2, y1, y2) {
-        # Test
-        # data = read.csv("./LUC_Index_SNPs_20160607_short_A549_bySample_assnp/LUC_Index_SNPs_20160607_short_riskPop_0.5_A549_bySample_alleleDist_ase_snp.csv")
-        # x1 = data$ref_count
-        # x2 = data$alt_count
-        # y1 = data$ref_cnv
-        # y2 = data$alt_cnv
 
         # y1 and y2 are the cnv of ref and alt
         xy = cbind(x1, x2, y1, y2)
@@ -310,17 +297,6 @@ get_ase_snp_main = function(snp_info_alleleDist_file,
                             use_encode_cnv = F
                             ) {
 
-        # Test #
-        # snp_info_alleleDist_file = "./tests/test6/LUC_Index_SNPs_20160607_short_ENCODE_DNase_assnp/LUC_Index_SNPs_20160607_short_riskPop_0.5_ENCODE_DNase_alleleDist.csv"
-        # snp_info_peak_file = "./LUC_Index_SNPs_20160607_DDBJ_A549_assnp/LUC_Index_SNPs_20160607_riskPop_0.5_DDBJ_A549_peakAnnotation.csv"
-        # snp_info_vcf_file = "./LUC_Index_SNPs_20160607_DDBJ_A549_assnp/LUC_Index_SNPs_20160607_riskPop_0.5_DDBJ_A549_genotypeInfo.csv"
-        # snp_info_cnv_file = "./LUC_Index_SNPs_20160607_DDBJ_A549_assnp/LUC_Index_SNPs_20160607_cnv_riskPop_0.5_DDBJ_A549_cnvInfo.csv"
-        # het_threshold = 0.1
-        # depth_threshold = 20
-        # genotype_by_sample = T
-        # output_dir = "./LUC_Index_SNPs_20160607_DDBJ_A549_assnp/"
-        # output_file = NA
-        # use_encode_cnv = F
 
         require("dplyr")
         cat("calculate allele-specific effects for SNPs ... \n")
@@ -373,5 +349,3 @@ get_ase_snp_main = function(snp_info_alleleDist_file,
         return (snp_info_alleleDist_df)
 }
 
-# Test #
-# get_ase_snp_main(snp_info_alleleDist_file, snp_info_peak_file, snp_info_vcf_file, snp_info_cnv_file)

@@ -28,15 +28,10 @@ get_assnp_byBam = function(index_snp_file,
                   merge_replicates = merge_replicates)
 }
 
-# Test #
-# get_assnp_singleBam(index_snp_file = "./data/input_snps/LUC_Index_SNPs_20160607_short.csv",
-#                     bam_dir = "./data/samples/DDBJ_A549/bam_files/", sample_name = "A549_singleBam")
-
-
 
 # wrapper function: get_assnp_sample ------------------------------------------------------------------------------
-# get ase snp just by .bam files and .vcf files; with information of peak, and cnv added; ase are corrected by cnv
 
+# get ase snp just by .bam files and .vcf files; with information of peak, and cnv added; ase are corrected by cnv
 get_assnp_bySample = function(index_snp_file,
                             snp_info_file = NA,
                             sample_name = "",
@@ -58,6 +53,3 @@ get_assnp_bySample = function(index_snp_file,
                   genotype_by_sample = T,
                   merge_replicates = merge_replicates)
 }
-
-# get_assnp_sample(index_snp_file = "./data/input_snps/LUC_Index_SNPs_20160607.csv",
-#                  sample_name = "A549_bySample", sample_dir = "./data/samples/DDBJ_A549/")

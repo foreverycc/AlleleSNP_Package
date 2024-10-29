@@ -10,16 +10,6 @@ prepare_files_for_cnvInfer = function(index_snp_file, r2_cutoff = 0.5, sample_et
         # 2. add wgs info
         # Input: 1. index snp file ; 2. the ethnicity of the sample (not the SNPs)
 
-        # Test #
-        # index_snp_file = "./data/input_snps/LUC_Index_SNPs_20160607.csv"
-        # r2_cutoff = 0.5
-        # sample_ethic = "EUR"
-        # output_dir = "./"
-        # sample_name = ""
-        # vcf_file_for_cnv = "/Volumes/Macintosh_HD_2/Research/00-PROJECTS/00-Allele_Specific_SNP_Finding/data/Samples/DDBJ_A427/vcf_files/A427_snv.GATK.formatcor.vcf"
-
-        # source("./src/scripts/F1.1-get_ldsnp_info.R")
-        # source("./src/scripts/F2.3-get_vcf_info.R")
 
         ldsnp_info_list = get_ldsnp_info_main(index_snp_file = index_snp_file,
                                               population = sample_ethic,
@@ -38,11 +28,6 @@ prepare_files_for_cnvInfer = function(index_snp_file, r2_cutoff = 0.5, sample_et
 # 1-2. add locus information
 add_locus_info = function(snp_info_addVcf_df) {
         # Aim: to add locus information (index SNPs in high LD are considered as one locus)
-        ### Test ###
-        # snp_info_addVcf_df = snp_info_addVcf_df_raw
-
-        # source the indexSNP class
-        # source("./src/scripts/F2.4.1.1-indexSNP_class.R")
 
         # generate {indexSNP object} for each index SNPs
         index_snps = unique(as.character(snp_info_addVcf_df$query_snp))
@@ -90,9 +75,6 @@ add_locus_info = function(snp_info_addVcf_df) {
 mod_vcf_info = function(snp_info_addVcf_df) {
         # Aim: to modify vcf df to make it more suitable for further analysis
 
-        # Test #
-        # snp_info_addVcf_df = snp_info_addVcf_list$snp_info_addVcf_df
-
         snp_info_addVcf_df$allele_1_count = NA
         snp_info_addVcf_df$allele_2_count = NA
 
@@ -127,12 +109,6 @@ get_het_locus_summary_df = function(snp_info_addVcf_df, sample_ethic = "EUR", r2
                                     index_snp_info_df) {
         # To calculate CNV number for each locus
         # step 1: collect distritbution total SNPs for each locus
-
-        # ----- Test ----- #
-        # snp_info_addVcf_df = snp_info_addVcf_df
-        # read_count_cutoff = 200
-        # index_snp_info_df = snp_info_addVcf_list$index_snp_info_df
-        # ---------------- #
 
         # calculate het-SNP count by LD
         snp_info_addVcf_df_narm = snp_info_addVcf_df[complete.cases(snp_info_addVcf_df) &
@@ -201,12 +177,6 @@ get_loci_cnv_byEthic = function(index_snp_file, cnv_param_list,
 # Aim: to get loci cnv information of a particular ethic group
 # Input: index snp file, vcf file, ethic
 # Output: het_snp_summary_df_ethic (summarized info of loci cnv based on a particular ethic group)
-
-        # Test #
-        # index_snp_file = "./data/input_snps/LUC_Index_SNPs_20160607.csv"
-        # sample_name = ""
-        # sample_ethic = "ASN"
-        # output_dir = "./"
 
         # 1. process snp data
         ## 1) get ld snp table; 2) add vcf information

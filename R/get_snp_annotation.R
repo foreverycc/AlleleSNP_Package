@@ -186,7 +186,3 @@ get_snp_annotation_main = function(snp_info_file = "./data/haploreg_files/LUC_In
         
 }
         
-# Test #
-# get_snp_annotation_main()
-# get_snp_annotation_main(snp_info_file = "./LUC_Index+ldsnps_SNPs_20160607_All.csv", output_dir = "./")
-

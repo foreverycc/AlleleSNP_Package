@@ -8,13 +8,7 @@
 
 # helper functions ------------------------------------------------------------------------------------------------
 
-# source function: gen_output_file_cnvInfo
-# source("./src/scripts/F2.4-get_cnv_info.R")
-
-# 1. source function: read_inputSNP_file
-# source ("./src/scripts/F2.1-get_alleleDist_info.R")
-
-# 2. generate snp-cnv table
+# generate snp-cnv table
 # Aim: to generate snp-cnv table: rows - snps; cols - encode samples;
 gen_snp_cnv_table = function(snp_info_df, snp_info_gr) {
 
@@ -25,9 +19,6 @@ gen_snp_cnv_table = function(snp_info_df, snp_info_gr) {
         colnames(snp_cnv_table) = names(encode_cnv_gr_list)
 
         for (i in 1:length(encode_cnv_gr_list)) {
-                # ----- test ------ #
-                # print (i)
-                # ----------------- #
                 overlaps_df_i = as.data.frame(findOverlaps(snp_info_gr, encode_cnv_gr_list[[i]]))
                 cnv_snp_info_i = encode_cnv_gr_list[[i]][overlaps_df_i$subjectHits]$name
                 snp_cnv_table[overlaps_df_i$queryHits, i] = cnv_snp_info_i
@@ -43,11 +34,6 @@ gen_snp_cnv_table = function(snp_info_df, snp_info_gr) {
 # main function ---------------------------------------------------------------------------------------------------
 
 get_encodeCnv_info_main = function(snp_info_file, output_dir = "./", sample_name = "", output_file = NA) {
-
-        # Test #
-        # snp_info_file = "./data/haploreg_files/LUC_Index+LD_SNPs_20160607.csv"
-        # snp_info_alleleDist_file = "./tests/test6/LUC_Index_SNPs_20160607_short_ENCODE_DNase_assnp/LUC_Index_SNPs_20160607_short_riskPop_0.5_ENCODE_DNase_alleleDist.csv"
-        # snp_info_alleleDist_df = read.csv(snp_info_alleleDist_file)
 
         # 1. read snp info file
         snp_info_list = read_inputSNP_file(snp_info_file)
@@ -72,7 +58,3 @@ get_encodeCnv_info_main = function(snp_info_file, output_dir = "./", sample_name
 
         return(list(snp_info_addCnv_df = snp_info_addCnv_df, output_file = output_file))
 }
-
-
-# Test #
-# get_encodeCnv_info_main("./data/haploreg_files/LUC_Index+LD_SNPs_20160607.csv", sample_name = "ENCODE")

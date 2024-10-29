@@ -28,6 +28,9 @@ The first way to identify ASE is through examination of bam files.
 
 For each bam file (ChIP-seq, DNase-seq, ATAC-seq, FAIRE-seq, etc.), AlleleSNP will search for heterozygous given SNPs, then extract the number of reads that contain either the reference or the alternate allele, and finally perform statistical tests (Fig 2).
 
+In this mode, The assumption is that each SNP has two alleles: one representing the reference and the other representing the alternate allele. A binomial test is used to estimate allele-specific effect.
+
+
 ### 3.1 Input SNP format
 
 ```R
@@ -83,7 +86,7 @@ get_assnp_byBam(
 
 Output results:
 
-| rsID        | biofeature  | ref | alt | ref_rmdup | alt_rmdup | genotype_singleBam | genotype_sample | genotype_vcf | genotype_final | biofeature_overlap\_names | biofeature_overlap\_num | biofeature_overlap | ref_count | alt_count | ref_cnv | alt_cnv | p.val.raw  | p.val.cnv  | p.val.cnv.bh | p.val.cnv.bonf |
+| rsID        | biofeature  | ref | alt | ref_rmdup | alt_rmdup | genotype_singleBam | genotype_sample | genotype_vcf | genotype_final | biofeature_overlap\_names | biofeature_overlap\_num | biofeature_overlap | ref_wgs | alt_wgs | ref_cnv | alt_cnv | p.val.raw  | p.val.cnv  | p.val.cnv.bh | p.val.cnv.bonf |
 |-------------|-------------|-----|-----|-----------|-----------|--------------------|-----------------|--------------|----------------|---------------------------|------------------------|--------------------|-----------|-----------|---------|---------|------------|------------|--------------|---------------|
 | rs3813570   | A549_PolII  | 49  | 74  | 21        | 26        | TRUE               | NA              | NA           | TRUE           | NA                        | NA                     | NA                 | NA        | NA        | 1       | 1       | 0.03004691 | 0.03004691 | 0.3004691    | 0.3004691     |
 | rs31490     | A549\_H3K4me3| 25  | 16  | 14        | 11        | TRUE               | NA              | NA           | TRUE           | NA                        | NA                     | NA                 | NA        | NA        | 1       | 1       | 0.21102360 | 0.21102360 | 0.7420078    | 1.0000000     |
@@ -101,7 +104,9 @@ Output results:
 
 If you have more information of a sample, you could also identify ASE through integrating multiple data types of a sample.
 
-Here, AlleleSNP provides a way to integrate bam files, peak files, and vcf files together to identify ASE. This mode may identify heterozygous SNPs that are not called using a single bam file, but it also requires more prerequisite work, such as peak calling and vcf calling.
+Here, AlleleSNP provides a way to integrate bam files, peak files, and vcf files together to identify ASE. This mode may identify heterozygous SNPs that are not called using a single bam file, but it also requires more prerequisite work, such as peak calling and vcf calling. 
+
+In this mode, the Whole Genome Sequencing (WGS) data can be used to correct allele-specific calling: the alleles of heterozygous SNPs within the same LD block are combined respectively (ref_cnv and alt_cnv), then a chi-square test is used to estimate alle-specific effect.
 
 ### 4.1 In the sample mode, we can incorporate more types of data, including:
 - bam files
@@ -151,7 +156,7 @@ get_assnp_bySample(
 
 Output results:
 
-| rsID        | biofeature  | ref | alt | ref_rmdup | alt_rmdup | genotype_singleBam | genotype_sample | genotype_vcf | genotype_final | biofeature_overlap | biofeature_overlap_num | biofeature_overlap_names                                                      | ref_count | alt_count | ref_cnv | alt_cnv | p.val.raw  | p.val.cnv  | p.val.cnv.bh | p.val.cnv.bonf |
+| rsID        | biofeature  | ref | alt | ref_rmdup | alt_rmdup | genotype_singleBam | genotype_sample | genotype_vcf | genotype_final | biofeature_overlap | biofeature\_overlap\_num | biofeature\_overlap\_names                                                      | ref_wgs | alt_wgs | ref_cnv | alt_cnv | p.val.raw  | p.val.cnv  | p.val.cnv.bh | p.val.cnv.bonf |
 |-------------|-------------|-----|-----|-----------|-----------|--------------------|-----------------|--------------|----------------|--------------------|------------------------|--------------------------------------------------------------------------------|-----------|-----------|---------|---------|------------|------------|--------------|---------------|
 | rs3813570   | A549_PolII  | 49  | 74  | 21        | 26        | TRUE               | TRUE            | TRUE         | TRUE           | TRUE               | 4                      | A549\_H3K27ac\_peaks, A549\_H3K4me3\_peaks,A549\_H3K9ac\_peaks,A549_PolII\_peaks        | 48        | 36        | 1501    | 1558    | 0.03004691 | 0.05533592 | 0.5533592    | 0.5533592      |
 | rs57064725  | A549\_H3K27ac| 9   | 15  | 7         | 9         | TRUE               | TRUE            | TRUE         | TRUE           | TRUE               | 4                      | A549\_H3K27ac\_peaks,A549\_H3K4me3\_peaks,A549\_H3K9ac\_peaks,A549_PolII\_peaks        | 29        | 39        | 1501    | 1558    | 0.30745625 | 0.35532555 | 0.8862402    | 1.0000000      |

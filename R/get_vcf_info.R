@@ -10,13 +10,10 @@
 
 # # 1. read snp file into data frame
 # # snp_list should contain both the df and GRange object
-# snp_list = read_snpFile()
 #
 # # 2. read peak files into a list of GRange object
-# vcf_list = gen_vcf_list(vcf_dir, snp_info_gr)
 #
 # # 3. add overlapping info to original snp table
-# snp_df_proc = add_vcf_info(snp_info_df, vcf_list)
 
 # 0. load packages ------------------------------------------------------------------------------------------------
 
@@ -25,8 +22,6 @@ load_packages_2.3 = function(){
         load = lapply(packages, require, character.only = T)
 }
 
-# function: write.csv0
-# source("./src/scripts/T1-toolbox.R")
 
 # toolbox: get short names
 
@@ -35,7 +30,7 @@ get_short_fileName = function(fileName_fullPath) {
         str_vec[length(str_vec)]
 }
 
-# 0. generate output file name ------------------------------------------------------------------------------------
+# 1. generate output file name ------------------------------------------------------------------------------------
 
 gen_output_file_vcfInfo = function(snp_info_file, output_dir = "./", sample_name = "") {
         # Aim: to get output file name
@@ -47,14 +42,6 @@ gen_output_file_vcfInfo = function(snp_info_file, output_dir = "./", sample_name
 
 }
 
-# 1. read snp file ------------------------------------------------------------------------------------------------
-
-# source ("./R/F2.1-get_alleleDist_info.R")
-# same as read_inputSNP_file
-
-# Test #
-# snp_info_list = read_inputSNP_file("./data/haploreg_files/LUC_Index+LD_SNPs_20160607.csv")
-
 
 # 2. read vcf files into a list -----------------------------------------------------------------------------------
 
@@ -62,9 +49,6 @@ gen_vcf_list = function(vcf_dir = NA, vcf_file = NA, snp_info_gr) {
 # Aim: to generate vcf list by reading vcf files
 # Input: 1. vcf dir; 2. snp_info_gr
 # Output: vcf list
-
-        # Test #
-        # vcf_dir = "./data/samples/DDBJ_A549/vcf_files/"
 
         if (!is.na(vcf_dir)) {
                 vcf_files = list.files(vcf_dir, ".vcf$", full.names=T)
@@ -99,8 +83,6 @@ read_vcfFile = function(vcf_file, param){
         vcf <- readVcf(tab, "hg19", param)
 }
 
-# Test #
-# vcf_list = gen_vcf_list(snp_info_gr = snp_info_list$snp_info_gr)
 
 # 3. process vcf list data -------------------------------------------------------------------------------------
 process_vcf_list = function(vcf_list) {
@@ -109,9 +91,6 @@ process_vcf_list = function(vcf_list) {
 # - row: SNPs
 # - col: seqnames start end width strand paramRangeID REF ALT QUAL FILTER ref_count alt_count
 # helper functions: get_vcf_software, sel_hetSnps_vcf, process_vcf_data
-
-        # Test #
-        # vcf_file = "./data/samples/DDBJ_A549/vcf_files/A549_snv.GATK.formatcor.vcf"
 
         vcf_df_list = replicate(length(vcf_list), list())
         names(vcf_df_list) = names(vcf_list)
@@ -167,9 +146,6 @@ process_vcf_data = function(vcf_data, vcf_software = "GATK") {
 # Input: vcf_data, (vcf annotation format)
 # Output: vcf data frame, with genotype, counts of ref and alt alleles added
 # helper function: extract_allelic_dist
-        ### Test ###
-        # vcf_data = vcf_data_i_het
-        # vcf_software = vcf_software_i
 
         # calculate ref and alt allele counts
         vcf_allelic_dist = extract_allelic_dist(vcf_data, vcf_software)
@@ -221,9 +197,6 @@ extract_allelic_dist = function(vcf_data, vcf_software = "GATK"){
         }
 }
 
-# Test #
-# vcf_df_list = process_vcf_list(vcf_list)
-
 # 4. to add genotype information to snp info data frame -----------------------------------------------------------
 
 add_vcf_info = function(snp_info_df, vcf_df_list) {
@@ -250,14 +223,6 @@ add_vcf_info = function(snp_info_df, vcf_df_list) {
 # main function ---------------------------------------------------------------------------------------------------
 
 get_vcf_info_main = function(snp_info_file, vcf_dir = NA, vcf_file = NA, output_dir = "./", sample_name = "", output_file = NA) {
-        ### Test ###
-        # snp_info_file = snp_file_loc
-        # vcf_dir = "./inst/extdata/sample/A549/vcf_files/"
-        # vcf_file = NA
-        # output_dir = "./"
-        # sample_name = ""
-        # output_file = NA
-
 
         # 0. load packages
         load_packages_2.3()
@@ -292,10 +257,4 @@ get_vcf_info_main = function(snp_info_file, vcf_dir = NA, vcf_file = NA, output_
         cat("vcf information added ... \n")
         return(list(snp_info_addVcf_df = snp_info_addVcf_df, output_file = output_file))
 }
-
-# Test #
-# snp_file_loc = "./input_snp_example2_A549_assnp/input_snp_example2_riskPop_0.5.csv"
-# get_vcf_info_main(snp_info_file = snp_file_loc, vcf_dir = "./inst/extdata/sample/A549/vcf_files/")
-
-
 

@@ -10,16 +10,12 @@
 
 # # 1. read snp file into data frame
 # # snp_list should contain both the df and GRange object
-# snp_list = read_snpFile()
 #
 # # 2. read peak files into a list of GRange object
-# peak_gr_list = read_peakFiles(peak_dir)
 #
 # # 3. Find whether the SNPs overlap with each peak
-# overlap_mat = get_overlap_mat(snp_gr, peak_gr_list)
 #
 # # 4. add overlapping info to original snp table
-# snp_df_proc = add_overlap_info(snp_df, overlap_mat)
 
 # 0. load packages ------------------------------------------------------------------------------------------------
 
@@ -28,10 +24,7 @@ load_packages_2.2 = function(){
         load = lapply(packages, require, character.only = T)
 }
 
-# function: write.csv0
-# source("./src/scripts/T1-toolbox.R")
-
-# 0. generate output file name ------------------------------------------------------------------------------------
+# 1. generate output file name ------------------------------------------------------------------------------------
 
 gen_output_file_peakInfo = function(snp_info_file, output_dir = "./", sample_name = "") {
 # Aim: to get output file name
@@ -42,14 +35,6 @@ gen_output_file_peakInfo = function(snp_info_file, output_dir = "./", sample_nam
         return (output_file)
 
 }
-
-# 1. read snp file ------------------------------------------------------------------------------------------------
-
-# source ("./src/scripts/F2.1-get_alleleDist_info.R")
-# same as read_inputSNP_file
-
-# Test #
-# snp_info_list = read_inputSNP_file("./data/haploreg_files/LUC_Index+LD_SNPs_20160607.csv")
 
 
 # 2. read peak files ----------------------------------------------------------------------------------------------
@@ -87,8 +72,6 @@ read_peak_files = function(peak_dir){
         return (peak_gr_list)
 }
 
-# Test #
-# peak_gr_list = read_peak_files("./data/samples/DDBJ_A549/peak_files/")
 
 
 # 3. get overlap table --------------------------------------------------------------------------------------------
@@ -107,17 +90,11 @@ get_overlap_mat = function(snp_info_gr, peak_gr_list){
 
         # fill in the matrix
         for (i in 1:biofeature_num){
-                # -------- Debug -------- #
-                # print(i)
-                # ----------------------- #
                 overlap_mat[, i+1] = overlapsAny(snp_info_gr, peak_gr_list[[i]])
         }
 
         return(overlap_mat)
 }
-
-# Test #
-# head(get_overlap_mat(snp_info_list$snp_info_gr, peak_gr_list))
 
 
 # 4. add overlapping info -----------------------------------------------------------------------------------------
@@ -195,9 +172,6 @@ get_peak_info_main = function(snp_info_file, peak_dir, output_dir = "./", sample
 
 }
 
-# Test #
-# snp_file_loc = "LUC_Index_SNPs_20160607_riskPop_0.5.csv"
-# get_peak_info_main(snp_info_file = snp_file_loc, peak_dir = "./data/samples/DDBJ_A549/peak_files/")
 
 
 

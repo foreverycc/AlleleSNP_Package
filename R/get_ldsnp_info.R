@@ -9,26 +9,6 @@
 ### In this version, I use python to webscrape information from HaploReg websites rather than manually get it ###
 
 
-# outline ---------------------------------------------------------------------------------------------------------
-
-# # read index SNP table
-# indexSNP_df = read_indexSNP()
-# populations = unique(indexSNP_df$population)
-# pop_n = length(populations)
-#
-# # find LD SNPs by population
-# haploreg_list = replicate(pop_n, list())
-# i = 1
-# for (pop in populatinos) {
-#     indexSNP_df_pop = filter(indexSNP_df, population == pop)
-#     haploreg_df_pop = get_haploreg_res(indexSNP_df_pop$rsID)
-#     haploreg_list[[i]] = haploreg_df_pop
-#     i = i + 1
-# }
-#
-# arrange_haploreg_list(haploreg_list)
-
-
 # toolboxes -------------------------------------------------------------------------------------------------------
 
 # Function to load necessary packages
@@ -36,9 +16,6 @@ load_packages_01 = function(){
         packages = c('rPython', 'dplyr', 'rtracklayer','GenomicRanges','FDb.UCSC.snp137common.hg19', "BBmisc")
         load = lapply(packages, require, character.only = T)
 }
-
-# function: write.csv0
-# source("./src/scripts/T1-toolbox.R")
 
 # Function to read data from haploreg output
 read.haploreg3 = function(file_loc) {
@@ -269,15 +246,7 @@ sel_haploreg_df = function(haploreg_df_proc) {
 get_ldsnp_info_main = function(index_snp_file = "./data/input_snps/LUC_Index_SNPs_20160607.csv",
                           population = NA, r2_cutoff = 0.5, for_cnv_call = F, output_dir = "./", output_file = NA) {
 
-        ### Test ###
-        # index_snp_file = "./data/input_snps/LUC_Index_SNPs_20160607.csv"
-        # population = NA
-        # r2_cutoff = 0.5
-        # for_cnv_call = F
-        # output_dir = "./"
-        # output_file = NA
-        ############
-
+        
         # step 0: load packages and input SNPs, population
         load_packages_01()
         cat("get high-LD SNPs information from index SNPs ... \n")
@@ -320,7 +289,3 @@ get_ldsnp_info_main = function(index_snp_file = "./data/input_snps/LUC_Index_SNP
         return (list(ldsnp_info_df = haploreg_df, output_file = output_file))
 }
 
-# Test #
-# get_ldsnp_info_main(output_file = "./LUC_Index+ldsnps_SNPs_20160607_All.csv")
-# get_ldsnp_info_main(population = "EUR", output_file = "./LUC_Index+ldsnps_SNPs_20160607_EUR.csv")
-# get_ldsnp_info_main(population = "ASN", output_file = "./LUC_Index+ldsnps_SNPs_20160607_ASN.csv")

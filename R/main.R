@@ -1,4 +1,4 @@
-# M1-get_assnp
+# Main functiget_assnp
 ## ==================================================================================
 ## Function: get_ase_snp
 ###  Aim: To get allele-specific SNP
@@ -8,15 +8,7 @@
 ## ==================================================================================
 
 
-# source scripts for use ------------------------------------------------------------------------------------------
-
-# for (script in list.files("./src/scripts/", pattern = "^[FT].*.R", full.names = T)) {
-#         cat ("source script: ", script, "\n")
-#         source(script)
-# }
-
-
-# build main function ---------------------------------------------------------------------------------------------
+# main function ---------------------------------------------------------------------------------------------
 
 get_assnp = function(index_snp_file = NA,
                      snp_info_file = NA,
@@ -38,19 +30,6 @@ get_assnp = function(index_snp_file = NA,
                      read_count_cutoff = 100,
                      use_encode_cnv = F,
                      ...) {
-        # Test #
-        # index_snp_file = "./data/input_snps/LUC_Index_SNPs_20160607.csv"
-        # snp_info_file = NA
-        # sample_name = "DDBJ_A549"
-        # sample_ethic = "EUR"
-        # bam_dir = "./data/samples/DDBJ_A549/bam_files/"
-        # peak_dir = NA
-        # vcf_dir = NA
-        # vcf_file_for_cnv = NA
-        # het_threshold = 0.1
-        # depth_threshold = 20
-        # base_qual_threshold = 20
-        # mapq_threshold = 20
 
         # 0. make a directory for data storation
         index_snp_file_vec = strsplit(index_snp_file, "/")[[1]]

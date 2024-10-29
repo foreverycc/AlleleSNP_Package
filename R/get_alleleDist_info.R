@@ -8,9 +8,6 @@
 
 # toolbox ---------------------------------------------------------------------------------------------------------
 
-# function: write.csv0
-# source("./src/scripts/T1-toolbox.R")
-
 # toolbox: convert ascii to quality score
 ascii_to_quality_score = function(x) {
         strtoi(charToRaw(x),16L)
@@ -39,16 +36,7 @@ gen_param_list = function(snp_info_file,
                           server,
                           bam_dir,
                           rmdup_file) {
-        # Test #
-        # snp_info_file = "./data/input_snps/Try_query_SNPs.csv"
-        # cell_sel = ""
-        # output_dir = "./"
-        # sample_name = ""
-        # base_qual_threshold = 20
-        # mapq_threshold = 20
-        # server = "http"
-        # bam_dir = "http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeUwDgf/"
-        # rmdup_file = F
+        
 
         # get the analysis id
         snp_info_vec = strsplit(snp_info_file, "/")[[1]]
@@ -179,11 +167,6 @@ add_bam_sample_info = function(bam_list, bam_lib){
         # Input: bam_list, bam_lib (library of the bam, normally is just the bam file without .bam)
         # Output: bam_list with some added information
 
-        # --------------- test ----------------- #
-        #     bam_list = bam_list
-        #     bam_lib = bam_lib
-        # -------------------------------------- #
-
         # add base quality info
         for (i in 1: length(bam_list)){
                 # add mapq info if there's no
@@ -207,15 +190,6 @@ add_bam_base_info = function(bam_list, snp_info_list) {
         # Output: bam_list with base-level information added
         # helper function: parse_base_info_snp
 
-        # --------------- test ----------------- #
-        #           bam_list = bam_list
-        #           snp_chr = snp_info_list$snp_chr
-        #           snp_pos = snp_info_list$snp_pos
-        #           snp_id = snp_info_list$snp_id
-        #           snp_ref = snp_info_list$snp_ref
-        #           snp_alt = snp_info_list$snp_alt
-        # -------------------------------------- #
-
         # add some snp information
         for (i in 1: length(bam_list)){
                 bam_list[[i]]$snp$id = snp_info_list$snp_id[i]
@@ -227,10 +201,6 @@ add_bam_base_info = function(bam_list, snp_info_list) {
 
         # add some base and base-quality information
         for (i in 1: length(bam_list)){
-                # --------------- test ----------------- #
-                # print (paste("ith snp:", i))
-                # print (bam_list[[i]]$snp$id)
-                # -------------------------------------- #
 
                 bam_list_i= bam_list[[i]]
                 seq_list = bam_list_i$seq
@@ -265,21 +235,9 @@ parse_base_info_snp = function(bam_list_i){
         base_qual_vec = vector()
 
         for (j in 1:length(seq_list)){
-                # ----- test ----- #
-                # print (paste("j:", j))
-                # ---------------- #
                 seq_j = seq_list[[j]]
-                # ----- test ----- #
-                # print (seq_j)
-                # ---------------- #
                 seq_qual_j = seq_qual_list[[j]]
-                # ----- test ----- #
-                # print (seq_qual_j)
-                # ---------------- #
                 snp_rel_loc_j = snp_rel_loc_vec[j]
-                # ----- test ----- #
-                # print (snp_rel_loc_j)
-                # ---------------- #
 
                 if (snp_rel_loc_j > length(seq_j) | snp_rel_loc_j < 1 | is.na(snp_rel_loc_j)) {
                         # for some index out-of-boundary problems
@@ -354,9 +312,6 @@ filter_bam_list = function(bam_list, param_list) {
         rmdup_file = param_list$rmdup_file
 
         for (i in 1: length(bam_list)){
-                # ------ debug ------- #
-                # print (i)
-                # -------------------- #
                 bam_list_i = bam_list[[i]]
                 snp_alleles = c(bam_list_i$snp$ref, bam_list_i$snp$alt)
                 if (is.null (bam_list_i$index_del_vec)) bam_list_i$index_del_vec = vector()
@@ -448,9 +403,6 @@ add_bam_reads_stats = function(bam_list){
         # Output: bam_list with reads statistics added
 
         for (i in 1:length(bam_list)){
-                # --------------- debug ---------------- #
-                #       print (i)
-                # -------------------------------------- #
                 bam_list_i = bam_list[[i]]
                 snp_ref_i = bam_list_i$snp$ref
                 snp_alt_i = bam_list_i$snp$alt
@@ -537,17 +489,6 @@ get_alleleDist_info_main = function(
         rmdup_file = F,
         merge_replicates = F
 ) {
-        # ---------------------- test --------------------- #
-        # snp_info_file = "./data/input_snps/LUC_Index_SNPs_20160607.csv"
-        # cell_sel = ""
-        # output_dir = "./"
-        # sample_name = "DDBJ_A549"
-        # base_qual_threshold = 20
-        # mapq_threshold = 20
-        # server = "local"
-        # bam_dir = "./data/samples/DDBJ_A549/bam_files/"
-        # rmdup_file = F
-        # ------------------------------------------------- #
 
         ### -------------------- step 0-1: load the packages -------------------- ###
         load_packages_2.1()
@@ -762,27 +703,3 @@ get_alleleDist_info_encodeUwHistone =
                         sample_name = sample_name, ...)
         }
 
-### --------------------------------------------------------------------------------- ###
-### --------- identify allele-specific effects in luc risk-associated snps ---------- ###
-### --------------------------------------------------------------------------------- ###
-
-### ------------- test ------------- ###
-# snp_file_loc = "./data/haploreg_files/LUC_Index+LD_SNPs_20160607.csv"
-# snp_file_loc = "./LUC_Index_SNPs_20160607_short_ENCODE_DNase_assnp/LUC_Index_SNPs_20160607_short_riskPop_0.5.csv"
-# get_alleleDist_info_local(snp_info_file = snp_file_loc, bam_dir = "./data/samples/DDBJ_A549/bam_files/")
-# get_alleleDist_info_encodeDNase(snp_info_file= "./data/input_snps/Try_query_SNPs.csv", cell_sel = "A549", merge_replicates= T)
-# get_alleleDist_info_encodeDNase(snp_info_file= snp_file_loc, cell_sel = "A549", merge_replicates= T)
-# get_alleleDist_info_encodeHaibTFBS(snp_info_file = snp_file_loc, cell_sel="A549")
-# get_alleleDist_info_encodeDGF(snp_info_file = "./data/input_snps/Try_query_SNPs.csv")
-### ------------- test ------------- ###
-
-### run analysis
-# setwd("/volumes/macintosh_hd_2/research/00-projects/00-assnp_encode")
-# snp_file_loc = "./data/luc_ldsnp_haploreg_arrange_summ_table.csv"
-# get_alleleDist_info_encodeDGF(snp_info_file = snp_file_loc)
-# get_alleleDist_info_encodeDNase(snp_info_file = snp_file_loc)
-# get_alleleDist_info_encodeHaibTFBS(snp_info_file = snp_file_loc)
-# get_alleleDist_info_encodeSydhTFBS(snp_info_file = snp_file_loc)
-# get_alleleDist_info_encodeUchicagoTFBS(snp_info_file = snp_file_loc)
-# get_alleleDist_info_encodeBroadHistone (snp_info_file = snp_file_loc)
-# get_alleleDist_info_encodeUwHistone(snp_info_file = snp_file_loc)
